@@ -14,7 +14,7 @@ function error
 }
 
 coin=''
-while getopts 's:g:h' flag; do
+while getopts 'sgh' flag; do
   case "${flag}" in
     h) echo "$usage"
        exit
@@ -35,4 +35,4 @@ if [ "$regen" = true ]; then
   ./autogen.sh && ./configure --with-incompatible-bdb
 fi
 
-make && make install
+make && sudo make install

@@ -83,25 +83,20 @@ apt-get -y install python3-zmq
 # Get and build Bitcoin
 echo_log "Getting and building bitcoin"
 #git clone https://github.com/bitcoin/bitcoin 
-sudo -u vagrant cp -R /bitcoin ~/bitcoin
-sudo -u vagrant BTC_build
-cd bitcoin
-sudo -u vagrant ./autogen.sh
-sudo -u vagrant ./configure --with-incompatible-bdb
-sudo -u vagrant make
-sudo -u vagrant make install
+sudo -u vagrant cp -R /bitcoin ~vagrant/bitcoin
+sudo -u vagrant ~vagrant/tools/BTC_build -g
 
 # Make bitcoin data directory
 mkdir "$bitcoin_data_dir"
 chown -R vagrant:vagrant "$bitcoin_data_dir"
 sudo -u vagrant cp /vagrant/conf/bitcoin.conf "$bitcoin_data_dir"
 
-# add blockchain tools to path
-#sudo -u vagrant mkdir -p /home/vagrant/tools
-#sudo -u vagrant cp /vagrant/tools/* /home/vagrant/tools
-#echo '' >> /home/vagrant/.bashrc
-#echo '# add blockchain tools to path' >> /home/vagrant/.bashrc
-#echo 'PATH=$PATH:/home/vagrant/tools' >> /home/vagrant/.bashrc
+# Get the python-bitcoinrpc library
+echo_log "Getting python-bitcoinrpc"
+apt-get -y install python-pip python-dev build-essential 
+pip install --upgrade pip
+pip install --upgrade virtualenv
+pip install python-bitcoinrpc
 
 echo_log "complete"
 echo "Bootstrap ends at "`date`
