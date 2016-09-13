@@ -23,7 +23,7 @@ echo_log "uname: $(uname -a)"
 echo_log "current procs: $(ps -aux)"
 echo_log "current df: $(df -h /)"
 
-# add 2G swap to avoid arround annoying ENOMEM problems (does not persist across reboot)
+# add 2G swap to avoid around annoying ENOMEM problems (does not persist across reboot)
 echo_log "create swap"
 mkdir -p /var/cache/swap/
 dd if=/dev/zero of=/var/cache/swap/swap0 bs=1M count=2048
@@ -35,6 +35,14 @@ swapon /var/cache/swap/swap0
 echo_log "base system update"
 apt-get -y update
 apt-get -y install vim
+
+# add blockchain tools to path
+sudo -u vagrant cp -r /vagrant/tools /home/vagrant
+cat >>/home/vagrant/.bashrc <<EOL
+
+# add blockchain tools to path
+PATH=$PATH:/home/vagrant/tools
+EOL
 
 # Git
 apt-get -y install git
@@ -57,11 +65,31 @@ apt-get -y install libdb++-dev
 # pkg-config
 apt-get -y install pkg-config
 
+# GNU debugger
+apt-get -y install gdb
+
+# Python 3 zmq for running the python test suite
+apt-get -y install python3-zmq
+
+# Get and build Berkeley DB 4.8
+# NOTE - we won't actually do this. Just build bitcoin without portable wallets.
+# wget http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz
+# tar -xvf db-4.8.30.NC.tar.gz
+# cd db-4.8.30.NC/build_unix
+# ../dist/configure
+# make install
+# cd ~
+
 # Get and build Bitcoin
-echo_log "Install bitcoin from source"
-git clone https://github.com/bitcoin/bitcoin
+echo_log "Getting and building bitcoin"
+#git clone https://github.com/bitcoin/bitcoin 
+sudo -u vagrant cp -R /bitcoin ~/bitcoin
+sudo -u vagrant BTC_build
 cd bitcoin
-./autogen.sh && ./configure --with-incompatible-bdb && make && make install
+sudo -u vagrant ./autogen.sh
+sudo -u vagrant ./configure --with-incompatible-bdb
+sudo -u vagrant make
+sudo -u vagrant make install
 
 # Make bitcoin data directory
 mkdir "$bitcoin_data_dir"

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+usage="$(basename "$0") [-s] [-g] - build bitcoin from source
+
+where:
+    -h show this (h)elp text
+    -s re(s)ync code from host machine to VM
+    -g re(g)enerate (ie run autogen and configure again)"
+
+function error
+{
+    echo "$1" 1>&2
+    exit 1
+}
+
+coin=''
+while getopts 's:g:h' flag; do
+  case "${flag}" in
+    h) echo "$usage"
+       exit
+       ;;
+    s) resync=true ;;
+    g) regen=true ;;
+    *) error "Unexpected option" ;;
+  esac
+done
+
+if [ "$resync" = true ]; then
+  BTC_resync
+fi
+
+cd ~/bitcoin
+
+if [ "$regen" = true ]; then
+  ./autogen.sh && ./configure --with-incompatible-bdb
+fi
+
+make && make install

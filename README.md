@@ -6,6 +6,7 @@ Virtual machine configuration for development environment for [bitcoin](https://
 
 - Install [vagrant](http://www.vagrantup.com/downloads)
 - Make sure you have a virtual machine provider. [Virtualbox](https://www.virtualbox.org/wiki/Downloads) will do.
+- git clone bitcoin into the directory containing the btc-dev directory. Vagrant is setup to sync the bitcoin directory to /bitcoin in the VM.
 - `vagrant up`
 
 ### What it's doing
