@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -Eeu
+set -o posix
+set -o pipefail
+
+declare -r bitcoin_target_dir="/opt/bitcoin"
+declare -r bitcoin_log="/vagrant/guest_logs/bitcoin.log"
+
+declare -r exe_name="$0"
+echo_log() {
+    local log_target="$bitcoin_log"
+    echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')] $exe_name: $@" >> $log_target
+}
+
+function error {
+    echo "$1" 1>&2
+    exit 1
+}
+
+echo "bitcoind progress: $(tail /home/vagrant/.bitcoin/testnet3/debug.log || true)"
