@@ -1,4 +1,4 @@
-# rods
+# btc-dev
 
 Virtual machine configuration for development environment for [bitcoin](https://github.com/bitcoin/bitcoin).
 
