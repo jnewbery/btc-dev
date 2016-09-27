@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-usage="$(basename "$0") [-s] [-g] - build bitcoin from source
+usage="$(basename "$0") [-s] [-g] [t] - build bitcoin from source
 
 where:
     -h show this (h)elp text
     -s re(s)ync code from host machine to VM
-    -g re(g)enerate (ie run autogen and configure again)"
+    -g re(g)enerate (ie run autogen and configure again)
+    -t test the newly built bitcoin"
 
 function error
 {
@@ -21,6 +22,7 @@ while getopts 'sgh' flag; do
        ;;
     s) resync=true ;;
     g) regen=true ;;
+    t) test=true ;;
     *) error "Unexpected option" ;;
   esac
 done
@@ -36,3 +38,7 @@ if [ "$regen" = true ]; then
 fi
 
 make && sudo make install
+
+if [ "$test" = true ]; then
+  BTC_test
+fi
