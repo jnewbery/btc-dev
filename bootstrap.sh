@@ -41,7 +41,7 @@ sudo -u vagrant cp -r /vagrant/tools /home/vagrant
 cat >>/home/vagrant/.bashrc <<EOL
 
 # add blockchain tools to path
-PATH=$PATH:/home/vagrant/tools
+PATH=\$PATH:/home/vagrant/tools
 EOL
 
 # Git
@@ -49,6 +49,13 @@ apt-get -y install git
 
 # Open SSL dev libraries
 apt-get -y install libssl-dev
+
+# Python 3.5, whynot?
+# http://askubuntu.com/questions/682869/how-do-i-install-newer-python-versions-using-apt-get
+# https://launchpad.net/~fkrull/+archive/ubuntu/deadsnakes/+index?batch=75&memo=75&start=75
+add-apt-repository -y ppa:fkrull/deadsnakes
+apt-get -y update
+apt-get -y install python3.5
 
 # Autoreconf
 apt-get -y install dh-autoreconf
@@ -103,3 +110,4 @@ echo "Bootstrap ends at "`date`
 bootstrap_end=`date +%s`
 echo "Bootstrap execution time is "$((bootstrap_end-bootstrap_start))" seconds"
 echo "$0 all done!"
+
