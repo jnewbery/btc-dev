@@ -3,30 +3,48 @@
 
 Vagrant.configure(2) do |config|
 
-  # General config
+  # Virtualbox specific config
 
-  config.vm.box = "ubuntu/trusty64"
-  config.vm.provision :shell, path: "bootstrap.sh"
-
-  # virtualbox specific config
-
-  config.vm.provider "virtualbox" do |vb|
+  config.vm.provider "virtualbox" do |vb, override|
+    override.vm.box = "ubuntu/trusty64"
     # A bit more RAM to avoid bitcoind memory problems
     vb.memory = "1024"
 
-    # Shared storage for bitcoin source code
-    config.vm.synced_folder "../bitcoin", "/bitcoin"
+    # Network config
+
+    # No port forwarding
+    # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+    # No private network
+    # config.vm.network "private_network", ip: "192.168.33.10"
+
+    # Public bridged network
+    override.vm.network "public_network"
+
+    # provisioning script
+    override.vm.provision :shell, path: "bootstrap.sh", args: "-u vagrant"
   end
 
-  # Network config
+  # AWS specific config
 
-  # No port forwarding
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.provider :aws do |aws, override|
+    override.vm.box = "dummy"
 
-  # No private network
-  # config.vm.network "private_network", ip: "192.168.33.10"
+    # Ubuntu - trusy64
+    aws.ami = "ami-c8580bdf"
 
-  # Public bridged network
-  config.vm.network "public_network"
+    # username must be ubuntu for this ami
+    override.ssh.username = "ubuntu"
+
+    # provisioning script
+    override.vm.provision :shell, path: "bootstrap.sh", args: "-u ubuntu"
+  end
+
+  # Shared storage for bitcoin source code
+  config.vm.synced_folder "../bitcoin", "/bitcoin"
 
 end
+
+# Load AWS private config
+aws_private = File.expand_path('../Vagrantfile-private-aws', __FILE__)
+load aws_private if File.exists?(aws_private)
