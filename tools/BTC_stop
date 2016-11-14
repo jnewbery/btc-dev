@@ -3,7 +3,6 @@ set -Eeu
 set -o posix
 set -o pipefail
 
-declare -r bitcoin_target_dir="/vagrant/bitcoin"
 declare -r bitcoin_log="/vagrant/guest_logs/bitcoin.log"
 
 declare -r exe_name="$0"
