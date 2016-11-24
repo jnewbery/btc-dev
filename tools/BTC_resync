@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-rsync -av --exclude-from 'BTC_resync_exclude' /bitcoin/ ~/bitcoin
+EXCLUDE_FILE=~/tools/BTC_resync_exclude
+rsync -av --exclude-from=$EXCLUDE_FILE /bitcoin/ ~/bitcoin
 
