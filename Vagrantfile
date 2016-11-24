@@ -23,6 +23,9 @@ Vagrant.configure(2) do |config|
 
     # provisioning script
     override.vm.provision :shell, path: "bootstrap.sh", args: "-u vagrant"
+
+    # Shared storage for bitcoin source code
+    override.vm.synced_folder "../bitcoin", "/bitcoin"
   end
 
   # AWS specific config
@@ -38,10 +41,10 @@ Vagrant.configure(2) do |config|
 
     # provisioning script
     override.vm.provision :shell, path: "bootstrap.sh", args: "-u ubuntu"
-  end
 
-  # Shared storage for bitcoin source code
-  config.vm.synced_folder "../bitcoin", "/bitcoin"
+    #Shared storage for bitcoin source code
+    override.vm.synced_folder "../bitcoin", "/bitcoin", type: "rsync", rsync__exclude: ".git/"
+  end
 
 end
 

@@ -3,6 +3,8 @@ set -Eeux
 set -o posix
 set -o pipefail
 
+declare -r guest_log="/vagrant/guest_logs/vagrant_mmc_bootstrap.log"
+
 echo "$0 will append logs to $guest_log"
 echo "Bootstrap starts at "`date`
 bootstrap_start=`date +%s`
@@ -34,7 +36,7 @@ while getopts "u:" opt; do
     esac
 done
 
-echo_log "user=$user, Leftovers: $@"
+echo_log "user=$user, leftover variables: $@"
 
 # add 2G swap to avoid around annoying ENOMEM problems (does not persist across reboot)
 echo_log "create swap"
@@ -115,7 +117,7 @@ sudo -Hu $user cp /vagrant/conf/bitcoin.conf "$bitcoin_data_dir"
 
 # Get Bitcoin
 echo_log "Getting bitcoin"
-sudo -Hu $user cp -R /bitcoin /home/$user
+sudo -Hu $user /home/$user/tools/BTC_resync
 
 echo_log "complete"
 echo "Bootstrap ends at "`date`
