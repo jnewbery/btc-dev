@@ -39,3 +39,4 @@ guest_logs/
 # misc
 .DS_Store
 .idea/
+Vagrantfile-private-aws
