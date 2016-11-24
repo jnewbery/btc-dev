@@ -4,7 +4,6 @@ set -o posix
 set -o pipefail
 
 declare -r guest_log="/vagrant/guest_logs/vagrant_mmc_bootstrap.log"
-declare -r bitcoin_data_dir="/home/vagrant/.bitcoin"
 
 echo "$0 will append logs to $guest_log"
 echo "Bootstrap starts at "`date`
@@ -23,6 +22,22 @@ echo_log "uname: $(uname -a)"
 echo_log "current procs: $(ps -aux)"
 echo_log "current df: $(df -h /)"
 
+# Get user argument
+# Reset in case getopts has been used previously in the shell.
+OPTIND=1 
+
+# Initialize our own variables:
+user=""
+
+while getopts "u:" opt; do
+    case "$opt" in
+    u)  user=$OPTARG
+        ;;
+    esac
+done
+
+echo_log "user=$user, leftover variables: $@"
+
 # add 2G swap to avoid around annoying ENOMEM problems (does not persist across reboot)
 echo_log "create swap"
 mkdir -p /var/cache/swap/
@@ -37,11 +52,11 @@ apt-get -y update
 apt-get -y install vim
 
 # add blockchain tools to path
-sudo -u vagrant cp -r /vagrant/tools /home/vagrant
-cat >>/home/vagrant/.bashrc <<EOL
+sudo -Hu $user cp -r /vagrant/tools /home/$user/
+cat >>/home/$user/.bashrc <<EOL
 
 # add blockchain tools to path
-PATH=\$PATH:/home/vagrant/tools
+PATH=\$PATH:/home/$user/tools
 EOL
 
 # Git
@@ -78,6 +93,13 @@ apt-get -y install gdb
 # Python 3 zmq for running the python test suite
 apt-get -y install python3-zmq
 
+# Get the python-bitcoinrpc library
+echo_log "Getting python-bitcoinrpc"
+apt-get -y install python-pip python-dev build-essential 
+pip install --upgrade pip
+pip install --upgrade virtualenv
+pip install python-bitcoinrpc
+
 # Get and build Berkeley DB 4.8
 # NOTE - we won't actually do this. Just build bitcoin without portable wallets.
 # wget http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz
@@ -87,23 +109,15 @@ apt-get -y install python3-zmq
 # make install
 # cd ~
 
-# Get and build Bitcoin
-echo_log "Getting and building bitcoin"
-#git clone https://github.com/bitcoin/bitcoin 
-sudo -u vagrant cp -R /bitcoin ~vagrant/bitcoin
-sudo -u vagrant ~vagrant/tools/BTC_build -g
-
 # Make bitcoin data directory
+declare -r bitcoin_data_dir="/home/$user/.bitcoin"
 mkdir "$bitcoin_data_dir"
-chown -R vagrant:vagrant "$bitcoin_data_dir"
-sudo -u vagrant cp /vagrant/conf/bitcoin.conf "$bitcoin_data_dir"
+chown -R $user:$user "$bitcoin_data_dir"
+sudo -Hu $user cp /vagrant/conf/bitcoin.conf "$bitcoin_data_dir"
 
-# Get the python-bitcoinrpc library
-echo_log "Getting python-bitcoinrpc"
-apt-get -y install python-pip python-dev build-essential 
-pip install --upgrade pip
-pip install --upgrade virtualenv
-pip install python-bitcoinrpc
+# Get Bitcoin
+echo_log "Getting bitcoin"
+sudo -Hu $user /home/$user/tools/BTC_resync
 
 echo_log "complete"
 echo "Bootstrap ends at "`date`

@@ -31,7 +31,7 @@ if [ "$resync" = true ]; then
   BTC_resync
 fi
 
-cd ~vagrant/bitcoin
+cd ~/bitcoin
 
 if [ "$regen" = true ]; then
   ./autogen.sh && ./configure --with-incompatible-bdb

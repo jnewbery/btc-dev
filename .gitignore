@@ -35,6 +35,7 @@
 # Vagrant files
 .vagrant*
 guest_logs/
+Vagrantfile-private-aws
 
 # misc
 .DS_Store
