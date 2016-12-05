@@ -53,10 +53,18 @@ apt-get -y install vim
 
 # add blockchain tools to path
 sudo -Hu $user cp -r /vagrant/tools /home/$user/
-cat >>/home/$user/.bashrc <<EOL
+cat >>/home/$user/.bashrc <<'EOL'
 
 # add blockchain tools to path
 PATH=\$PATH:/home/$user/tools
+EOL
+
+# helpful alises
+cat >>/home/$user/.bashrc <<'EOL'
+
+# Handy bitcoin aliases
+alias bd='bitcoind'
+alias bcli='bitcoin-cli'
 EOL
 
 # Git
