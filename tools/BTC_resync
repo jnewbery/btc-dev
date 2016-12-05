@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
 
-rsync -av --exclude-from 'BTC_resync_exclude' /bitcoin/ ~/bitcoin
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+EXCLUDE_FILE="$DIR""/BTC_resync_exclude"
+
+rsync -av --exclude-from $EXCLUDE_FILE /bitcoin/ ~/bitcoin
 
