@@ -1,0 +1,16 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+
+  config.vm.provider :aws do |aws, override|
+    # aws.access_key_id = "YOUR KEY"
+    # aws.secret_access_key = "YOUR SECRET KEY"
+    # aws.session_token = "SESSION TOKEN"
+    # aws.keypair_name = "YOUR KEYPAIR NAME"
+    # aws.security_groups = ["YOUR SECURITY GROUP"]
+    # override.ssh.private_key_path = "PATH TO YOUR PRIVATE KEY"
+
+  end
+
+end
