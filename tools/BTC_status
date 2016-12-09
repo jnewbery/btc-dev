@@ -2,10 +2,12 @@
 
 if pgrep bitcoind > /dev/null
   then if grep "^testnet=1" ~/.bitcoin/bitcoin.conf > /dev/null
-    then echo -en '\e[34m[bitcoind running \e[01;34mtestnet\e[00;34m]\e[00m'
+    then echo -en '\e[34m[\e[01;34mtestnet\e[00;34m]\e[00m'
+    exit 0
   else
-    echo -en '\e[32m[bitcoind running \e[01;32mmainnet\e[00;32m]\e[00m'
+    echo -en '\e[32m[\e[01;32mmainnet\e[00;32m]\e[00m'
+    exit 0
   fi
 else
-  echo -en '\e[31m[bitcoind not running]\e[00m'
+  echo -en '\e[31m[\e[01;31mnot running\e[00;31m]\e[00m'
 fi
