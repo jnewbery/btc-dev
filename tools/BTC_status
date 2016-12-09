@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
-if pgrep bitcoind > /dev/null
-  then if grep "^testnet=1" ~/.bitcoin/bitcoin.conf > /dev/null
-    then echo -en '\e[34m[\e[01;34mtestnet\e[00;34m]\e[00m'
-    exit 0
-  else
-    echo -en '\e[32m[\e[01;32mmainnet\e[00;32m]\e[00m'
-    exit 0
-  fi
+if ! pgrep bitcoind > /dev/null
+  then echo -en '\e[31m[not running]\e[00m'
 else
-  echo -en '\e[31m[\e[01;31mnot running\e[00;31m]\e[00m'
+  bitcoin-cli help > /dev/null 2>&1
+  if (($? == 28))
+    then echo -en '\e[31m[starting]\e[00m'
+  else 
+    CHAIN=$(bitcoin-cli getblockchaininfo | grep "\"chain\"" | cut -f 4 -d "\"")
+    if (($CHAIN == 'test'))
+      then echo -en '\e[34m[\e[01;34mtestnet\e[00;34m]\e[00m'
+    elif (($CHAIN == 'main'))
+      then echo -en '\e[32m[\e[01;32mmainnet\e[00;32m]\e[00m'
+    elif (($CHAIN == 'regtest'))
+      then echo -en '\e[32m[\e[01;32mregtest\e[00;32m]\e[00m'
+    fi
+  fi
 fi
