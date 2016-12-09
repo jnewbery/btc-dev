@@ -22,6 +22,7 @@ Provisioning a bitcoin development environment by grabbing all the dependencies,
 
 #### Running remotely on AWS
 
+- Make sure that the [vagrant-aws plugin](https://github.com/mitchellh/vagrant-aws) is installed.
 - Super secret AWS config is stored in `Vagrantfile-private-aws`. Update that file with your AWS config.
 - `vagrant up --provisioner=aws`
 
