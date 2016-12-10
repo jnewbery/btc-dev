@@ -51,22 +51,6 @@ echo_log "base system update"
 apt-get -y update
 apt-get -y install vim
 
-# add blockchain tools to path
-sudo -Hu $user cp -r /vagrant/tools /home/$user/
-cat >>/home/$user/.bashrc <<'EOL'
-
-# add blockchain tools to path
-PATH=\$PATH:/home/$user/tools
-EOL
-
-# helpful alises
-cat >>/home/$user/.bashrc <<'EOL'
-
-# Handy bitcoin aliases
-alias bd='bitcoind'
-alias bcli='bitcoin-cli'
-EOL
-
 # Git
 apt-get -y install git
 
@@ -80,52 +64,8 @@ add-apt-repository -y ppa:fkrull/deadsnakes
 apt-get -y update
 apt-get -y install python3.5
 
-# Autoreconf
-apt-get -y install dh-autoreconf
-
-# Boostlib
-apt-get -y install libboost-all-dev
-
-# libevent
-apt-get -y install libevent-dev
-
-# libdb_cxx
-apt-get -y install libdb++-dev
-
-# pkg-config
-apt-get -y install pkg-config
-
 # GNU debugger
 apt-get -y install gdb
-
-# Python 3 zmq for running the python test suite
-apt-get -y install python3-zmq
-
-# Get the python-bitcoinrpc library
-echo_log "Getting python-bitcoinrpc"
-apt-get -y install python-pip python-dev build-essential 
-pip install --upgrade pip
-pip install --upgrade virtualenv
-pip install python-bitcoinrpc
-
-# Get and build Berkeley DB 4.8
-# NOTE - we won't actually do this. Just build bitcoin without portable wallets.
-# wget http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz
-# tar -xvf db-4.8.30.NC.tar.gz
-# cd db-4.8.30.NC/build_unix
-# ../dist/configure
-# make install
-# cd ~
-
-# Make bitcoin data directory
-declare -r bitcoin_data_dir="/home/$user/.bitcoin"
-mkdir "$bitcoin_data_dir"
-chown -R $user:$user "$bitcoin_data_dir"
-sudo -Hu $user cp /vagrant/conf/bitcoin.conf "$bitcoin_data_dir"
-
-# Get Bitcoin
-echo_log "Getting bitcoin"
-sudo -Hu $user /home/$user/tools/BTC_resync
 
 echo_log "complete"
 echo "Bootstrap ends at "`date`
