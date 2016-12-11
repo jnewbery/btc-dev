@@ -54,14 +54,7 @@ apt-get -y install vim
 # Git
 apt-get -y install git
 
-# Open SSL dev libraries
-apt-get -y install libssl-dev
-
-# Python 3.5, whynot?
-# http://askubuntu.com/questions/682869/how-do-i-install-newer-python-versions-using-apt-get
-# https://launchpad.net/~fkrull/+archive/ubuntu/deadsnakes/+index?batch=75&memo=75&start=75
-add-apt-repository -y ppa:fkrull/deadsnakes
-apt-get -y update
+# Python 3.5
 apt-get -y install python3.5
 
 # GNU debugger
