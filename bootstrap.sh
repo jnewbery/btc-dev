@@ -60,6 +60,13 @@ apt-get -y update
 
 apt-get -y install vim git python3.5 gdb awk-grep
 
+# Add the best dotfiles in the world
+cd ~
+git clone https://github.com/jnewbery/dotfiles.git .dotfiles
+chown  $user:$user .dotfiles
+cd .dotfiles
+sudo -Hu $user infect
+
 echo_log "complete"
 echo "Bootstrap ends at "`date`
 bootstrap_end=`date +%s`
