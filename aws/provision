@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+""" aws/provision
+
+Provisions a new VM using AWS:
+    - checks that the machine hasn't been provisioned already
+    - checks that the secret aws config has been updated
+"""
+
+import subprocess
+import sys
+
+# Set up some slightly dodgy matching strings - we're relying on the format of `vagrant status` and `git status` not changing.
+NOT_PROVISIONED_STRING = "default                   not created"
+VAGRANTFILE_MODIFIED_STRING = "M Vagrantfile-private-aws"
+
+vagrant_status = subprocess.run(["vagrant", "status"], stdout=subprocess.PIPE, universal_newlines=True).stdout
+git_status = subprocess.run(["git", "status", "-s", "--ignored"], stdout=subprocess.PIPE, universal_newlines=True).stdout
+
+if NOT_PROVISIONED_STRING not in vagrant_status:
+    # VM has already been provisioned. Print error and exit.
+    print("It appears that the VM has already been provisioned. You may want to `vagrant destroy` and try again")
+    sys.exit()
+
+if VAGRANTFILE_MODIFIED_STRING not in git_status:
+    # The aws private data has not been modified. This is probably an error. Prompt user to check.
+    print("The Vagrantfile-private-aws files has not been modified.\n" \
+          "Provisioning a VM without updating at least the security group will " \
+          "probably fail since vagrant won't be able to ssh into the VM")
+    if ((input("continue anyway (Y/N)? ").lower()) != "y"):
+        sys.exit()
+
+subprocess.run(["vagrant", "up", "--provider=aws"])
