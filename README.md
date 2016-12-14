@@ -23,7 +23,7 @@ Provisioning a development environment.
 
 - Make sure that the [vagrant-aws plugin](https://github.com/mitchellh/vagrant-aws) is installed.
 - Super secret AWS config is stored in `Vagrantfile-private-aws`. Update that file with your AWS config.
-- Run `vagrant up --provisioner=aws` to start the machine.
+- Use the aws provisioning script to provision the machine: `aws/provision`
 
 ##### A note on Vagrant-private-aws
 
