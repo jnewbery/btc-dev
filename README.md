@@ -17,13 +17,19 @@ Provisioning a development environment.
 #### Running locally using Virtualbox
 
 - Make sure that [Virtualbox](https://www.virtualbox.org/wiki/Downloads) is installed.
-- `vagrant up`
+- Run `vagrant up` to start the machine.
 
 #### Running remotely on AWS
 
 - Make sure that the [vagrant-aws plugin](https://github.com/mitchellh/vagrant-aws) is installed.
 - Super secret AWS config is stored in `Vagrantfile-private-aws`. Update that file with your AWS config.
-- `vagrant up --provisioner=aws`
+- Run `vagrant up --provisioner=aws` to start the machine.
+
+##### A note on Vagrant-private-aws
+
+A sample `Vagrant-private-aws` is checked into the repository. If you change `Vagrant-private-aws` and run `git status`, it'll show up as modified and unstaged. To suppress that (and stop yourself from accidentally checking in your supersecret AWS config into a public repository), you should run the following command to make git assume that the file is always unmodified:
+
+`git update-index --assume-unchanged Vagrantfile-private-aws`
 
 ### What to do next
 
