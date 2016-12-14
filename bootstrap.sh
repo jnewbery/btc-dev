@@ -49,16 +49,16 @@ swapon /var/cache/swap/swap0
 # baseline system prep
 echo_log "base system update"
 apt-get -y update
-apt-get -y install vim
 
-# Git
-apt-get -y install git
+# Get stuff:
+#
+# - awk
+# - gdp
+# - git
+# - python 3.5
+# - vim
 
-# Python 3.5
-apt-get -y install python3.5
-
-# GNU debugger
-apt-get -y install gdb
+apt-get -y install vim git python3.5 gdb awk-grep
 
 echo_log "complete"
 echo "Bootstrap ends at "`date`
