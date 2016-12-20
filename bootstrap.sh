@@ -55,6 +55,7 @@ apt-get -y update
 # Get stuff:
 #
 # - ack
+# - ccache
 # - gdp
 # - git
 # - python 3.5
@@ -119,10 +120,6 @@ sudo -Hu $user cp /vagrant/conf/bitcoin.conf "$bitcoin_data_dir"
 # Get Bitcoin
 echo_log "Getting bitcoin"
 sudo -Hu $user /home/$user/tools/BTC_resync
-||||||| parent of e937f71... fix apt-get, dotfiles and add tmux2.4
-chown  $user:$user .dotfiles
-cd .dotfiles
-sudo -Hu $user infect
 
 echo_log "complete"
 echo "Bootstrap ends at "`date`
