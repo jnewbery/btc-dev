@@ -61,8 +61,8 @@ apt-get -y update
 # - tmux 2.4
 # - vim
 
-apt-get -y install ack-grep gdb git python3.5 tmux-next vim
-apt-get remove -y tmux
+apt-get -y install ack-grep ccache gdb git python3.5 python3-pip tmux-next vim
+apt-get -f remove -y tmux
 rm -f /usr/bin/tmux
 ln -s /usr/bin/tmux-next /usr/bin/tmux
 
@@ -119,6 +119,10 @@ sudo -Hu $user cp /vagrant/conf/bitcoin.conf "$bitcoin_data_dir"
 # Get Bitcoin
 echo_log "Getting bitcoin"
 sudo -Hu $user /home/$user/tools/BTC_resync
+||||||| parent of e937f71... fix apt-get, dotfiles and add tmux2.4
+chown  $user:$user .dotfiles
+cd .dotfiles
+sudo -Hu $user infect
 
 echo_log "complete"
 echo "Bootstrap ends at "`date`
