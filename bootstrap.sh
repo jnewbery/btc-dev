@@ -58,6 +58,7 @@ apt-get -y update
 # - ccache
 # - gdp
 # - git
+# - pip
 # - python 3.5
 # - tmux 2.4
 # - vim
@@ -66,6 +67,11 @@ apt-get -y install ack-grep ccache gdb git python3.5 python3-pip tmux-next vim
 apt-get -f remove -y tmux
 rm -f /usr/bin/tmux
 ln -s /usr/bin/tmux-next /usr/bin/tmux
+
+# Get Python stuff:
+#
+# - ipython
+pip3 install ipython
 
 # Add the best dotfiles in the world
 cd /home/$user
