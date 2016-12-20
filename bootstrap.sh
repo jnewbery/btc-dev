@@ -73,6 +73,53 @@ git clone https://github.com/jnewbery/dotfiles.git .dotfiles
 chown -R $user:$user .dotfiles
 sudo -Hu $user /home/$user/.dotfiles/infect
 
+# BITCOIN specific
+##################
+
+# Get stuff:
+#
+# - autoreconf
+# - Boostlib
+# - Open SSL dev libraries
+# - Python 3 zmq for running the python test suite
+# - libdb_cxx
+# - libevent
+# - pkg-config
+apt-get -y install dh-autoreconf libboost-all-dev libdb++-dev libevent-dev libssl-dev pkg-config python3-zmq
+
+# add blockchain tools to path
+sudo -Hu $user cp -r /vagrant/tools /home/$user/
+cat >>/home/$user/.bashrc <<'EOL'
+
+# add blockchain tools to path
+PATH=\$PATH:/home/$user/tools
+EOL
+
+# helpful alises
+cat >>/home/$user/.bashrc <<'EOL'
+
+# Handy bitcoin aliases
+alias bd='bitcoind'
+alias bcli='bitcoin-cli'
+EOL
+
+# Get the python-bitcoinrpc library
+echo_log "Getting python-bitcoinrpc"
+apt-get -y install python-pip python-dev build-essential 
+pip install --upgrade pip
+pip install --upgrade virtualenv
+pip install python-bitcoinrpc
+
+# Make bitcoin data directory
+declare -r bitcoin_data_dir="/home/$user/.bitcoin"
+mkdir "$bitcoin_data_dir"
+chown -R $user:$user "$bitcoin_data_dir"
+sudo -Hu $user cp /vagrant/conf/bitcoin.conf "$bitcoin_data_dir"
+
+# Get Bitcoin
+echo_log "Getting bitcoin"
+sudo -Hu $user /home/$user/tools/BTC_resync
+
 echo_log "complete"
 echo "Bootstrap ends at "`date`
 bootstrap_end=`date +%s`
