@@ -48,24 +48,30 @@ swapon /var/cache/swap/swap0
 
 # baseline system prep
 echo_log "base system update"
+add-apt-repository -y ppa:fkrull/deadsnakes
+add-apt-repository -y ppa:pi-rho/dev
 apt-get -y update
 
 # Get stuff:
 #
-# - awk
+# - ack
 # - gdp
 # - git
 # - python 3.5
+# - tmux 2.4
 # - vim
 
-apt-get -y install vim git python3.5 gdb awk-grep
+apt-get -y install ack-grep gdb git python3.5 tmux-next vim
+apt-get remove -y tmux
+rm -f /usr/bin/tmux
+ln -s /usr/bin/tmux-next /usr/bin/tmux
 
 # Add the best dotfiles in the world
-cd ~
+cd /home/$user
+rm -rf .dotfiles
 git clone https://github.com/jnewbery/dotfiles.git .dotfiles
-chown  $user:$user .dotfiles
-cd .dotfiles
-sudo -Hu $user infect
+chown -R $user:$user .dotfiles
+sudo -Hu $user /home/$user/.dotfiles/infect
 
 echo_log "complete"
 echo "Bootstrap ends at "`date`
