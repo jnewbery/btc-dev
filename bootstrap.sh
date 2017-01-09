@@ -87,21 +87,11 @@ sudo -Hu $user /home/$user/.dotfiles/infect
 # - pkg-config
 apt-get -y install dh-autoreconf libboost-all-dev libdb++-dev libevent-dev libssl-dev pkg-config python3-zmq
 
-# add blockchain tools to path
+# copy blockchain tools
 sudo -Hu $user cp -r /vagrant/tools /home/$user/
-cat >>/home/$user/.bashrc <<'EOL'
 
-# add blockchain tools to path
-PATH=\$PATH:/home/$user/tools
-EOL
-
-# helpful alises
-cat >>/home/$user/.bashrc <<'EOL'
-
-# Handy bitcoin aliases
-alias bd='bitcoind'
-alias bcli='bitcoin-cli'
-EOL
+# Update .bashrc
+cat /vagrant/bootstrap/bashrc >>/home/$user/.bashrc
 
 # Get the python-bitcoinrpc library
 echo_log "Getting python-bitcoinrpc"

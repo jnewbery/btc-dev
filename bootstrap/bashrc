@@ -1,0 +1,13 @@
+
+# add blockchain tools to path
+PATH=\$PATH:/home/$user/tools
+
+# Handy bitcoin aliases
+alias bd='bitcoind'
+alias bcli='bitcoin-cli'
+alias bb='BTC_build'
+alias bs="(pgrep bitcoind > /dev/null && bcli stop) || bd" # stop/start bitcoind
+alias bst='BTC_status'
+
+# bitcoind status in the shell prompt
+PS1='$(BTC_status) '$PS1
