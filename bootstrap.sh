@@ -78,6 +78,7 @@ cd /home/$user
 rm -rf .dotfiles
 git clone https://github.com/jnewbery/dotfiles.git .dotfiles
 chown -R $user:$user .dotfiles
+cd .dotfiles
 sudo -Hu $user /home/$user/.dotfiles/infect
 
 # BITCOIN specific
