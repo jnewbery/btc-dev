@@ -97,7 +97,7 @@ apt-get -y install dh-autoreconf libboost-all-dev libdb++-dev libevent-dev libss
 
 # add blockchain tools to path
 sudo -Hu $user cp -r /vagrant/tools /home/$user/
-cat >>/home/$user/.bashrc <<'EOL'
+cat >>/home/$user/.bashrc <<EOL
 
 # add blockchain tools to path
 PATH=\$PATH:/home/$user/tools
