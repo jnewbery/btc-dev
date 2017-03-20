@@ -107,8 +107,11 @@ EOL
 cat >>/home/$user/.bashrc <<'EOL'
 
 # Handy bitcoin aliases
-alias bd='bitcoind'
+alias bd='bitcoind' #starts bitcoin
 alias bcli='bitcoin-cli'
+alias bb='BTC_build' #builds bitcoin
+alias bs="(pgrep bitcoind > /dev/null && bcli stop) || bd" # stop/start bitcoind
+alias bst='BTC_status'
 EOL
 
 # Get the python-bitcoinrpc library
