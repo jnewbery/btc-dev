@@ -63,7 +63,7 @@ apt-get -y update
 # - tmux 2.4
 # - vim
 
-apt-get -y install ack-grep ccache gdb git python3.5 python3-pip tmux-next vim
+apt-get -y install ack-grep ccache gdb git python3.5 python3-pip tmux-next vim xdg-utils
 apt-get -f remove -y tmux
 rm -f /usr/bin/tmux
 ln -s /usr/bin/tmux-next /usr/bin/tmux
