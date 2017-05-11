@@ -34,10 +34,10 @@ fi
 cd ~/bitcoin
 
 if [ "$regen" = true ]; then
-  ./autogen.sh && ./configure --with-incompatible-bdb
+  ./autogen.sh && ./configure
 fi
 
-make && sudo make install
+make -j8 && sudo make install
 
 if [ "$test" = true ]; then
   BTC_test

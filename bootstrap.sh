@@ -63,7 +63,7 @@ apt-get -y update
 # - tmux 2.4
 # - vim
 
-apt-get -y install ack-grep ccache gdb git python3.5 python3-pip tmux-next vim
+apt-get -y install ack-grep ccache gdb git python3.5 python3-pip tmux-next vim xdg-utils
 apt-get -f remove -y tmux
 rm -f /usr/bin/tmux
 ln -s /usr/bin/tmux-next /usr/bin/tmux
@@ -93,7 +93,13 @@ sudo -Hu $user /home/$user/.dotfiles/infect
 # - libdb_cxx
 # - libevent
 # - pkg-config
-apt-get -y install dh-autoreconf libboost-all-dev libdb++-dev libevent-dev libssl-dev pkg-config python3-zmq
+apt-get -y install dh-autoreconf libboost-all-dev libevent-dev libssl-dev pkg-config python3-zmq
+
+# Get berkely db v4.8
+apt-get -y install software-properties-common
+add-apt-repository -y ppa:bitcoin/bitcoin
+apt-get -y update
+apt-get -y install libdb4.8-dev libdb4.8++-dev
 
 apt-get -y install software-properties-common
 add-apt-repository -y ppa:bitcoin/bitcoin
@@ -112,8 +118,11 @@ EOL
 cat >>/home/$user/.bashrc <<'EOL'
 
 # Handy bitcoin aliases
-alias bd='bitcoind'
+alias bd='bitcoind' #starts bitcoin
 alias bcli='bitcoin-cli'
+alias bb='BTC_build' #builds bitcoin
+alias bs="(pgrep bitcoind > /dev/null && bcli stop) || bd" # stop/start bitcoind
+alias bst='BTC_status'
 EOL
 
 # Get the python-bitcoinrpc library
