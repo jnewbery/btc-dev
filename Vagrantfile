@@ -8,7 +8,7 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |vb, override|
     override.vm.box = "ubuntu/xenial64"
     # A bit more RAM
-    vb.memory = "1024"
+    vb.memory = "8192"
 
     # Network config
 
