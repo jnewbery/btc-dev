@@ -95,6 +95,11 @@ sudo -Hu $user /home/$user/.dotfiles/infect
 # - pkg-config
 apt-get -y install dh-autoreconf libboost-all-dev libdb++-dev libevent-dev libssl-dev pkg-config python3-zmq
 
+apt-get -y install software-properties-common
+add-apt-repository -y ppa:bitcoin/bitcoin
+apt-get -y update
+apt-get -y install libdb4.8-dev libdb4.8++-dev
+
 # add blockchain tools to path
 sudo -Hu $user cp -r /vagrant/tools /home/$user/
 cat >>/home/$user/.bashrc <<EOL
