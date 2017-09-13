@@ -38,13 +38,13 @@ done
 
 echo_log "user=$user, leftover variables: $@"
 
-# add 2G swap to avoid around annoying ENOMEM problems (does not persist across reboot)
+# add 4G swap
 echo_log "create swap"
-mkdir -p /var/cache/swap/
-dd if=/dev/zero of=/var/cache/swap/swap0 bs=1M count=2048
-chmod 0600 /var/cache/swap/swap0
-mkswap /var/cache/swap/swap0
-swapon /var/cache/swap/swap0
+dd if=/dev/zero of=/swapfile bs=1G count=4
+chmod 0600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo '/swapfile   none    swap    sw    0   0' >> /etc/fstab
 
 # baseline system prep
 echo_log "base system update"
