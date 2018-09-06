@@ -75,13 +75,11 @@ pip3 install --upgrade pip
 hash -r pip3
 pip3 install ipython
 
-# Add the best dotfiles in the world
-cd /home/$user
-rm -rf .dotfiles
-git clone https://github.com/jnewbery/dotfiles.git .dotfiles
-chown -R $user:$user .dotfiles
-cd .dotfiles
-sudo -Hu $user /home/$user/.dotfiles/infect
+# Remind user to update dotfiles
+cat >>/home/$user/.bashrc <<EOL
+
+echo "Don't forget to update your dotfiles!"
+EOL
 
 # BITCOIN specific
 ##################
