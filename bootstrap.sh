@@ -71,6 +71,8 @@ ln -s /usr/bin/tmux-next /usr/bin/tmux
 # Get Python stuff:
 #
 # - ipython
+pip3 install --upgrade pip
+hash -r pip3
 pip3 install ipython
 
 # Add the best dotfiles in the world
