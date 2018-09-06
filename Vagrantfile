@@ -22,7 +22,7 @@ Vagrant.configure(2) do |config|
     override.vm.network "public_network"
 
     # provisioning script
-    override.vm.provision :shell, path: "bootstrap.sh", args: "-u ubuntu"
+    override.vm.provision :shell, path: "bootstrap.sh", args: "-u vagrant"
 
     # Shared storage for bitcoin source code
     override.vm.synced_folder "../bitcoin", "/bitcoin"
