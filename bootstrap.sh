@@ -48,7 +48,6 @@ echo '/swapfile   none    swap    sw    0   0' >> /etc/fstab
 
 # baseline system prep
 echo_log "base system update"
-add-apt-repository -y ppa:fkrull/deadsnakes
 add-apt-repository -y ppa:pi-rho/dev
 apt-get -y update
 
@@ -63,7 +62,7 @@ apt-get -y update
 # - tmux 2.4
 # - vim
 
-apt-get -y install ack-grep ccache gdb git python3.5 python3-pip tmux-next vim xdg-utils
+apt-get -y install ack-grep ccache gdb git python3.7 python3-pip tmux-next vim xdg-utils
 apt-get -f remove -y tmux
 rm -f /usr/bin/tmux
 ln -s /usr/bin/tmux-next /usr/bin/tmux

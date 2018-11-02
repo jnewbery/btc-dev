@@ -6,7 +6,7 @@ Vagrant.configure(2) do |config|
   # Virtualbox specific config
 
   config.vm.provider "virtualbox" do |vb, override|
-    override.vm.box = "ubuntu/xenial64"
+    override.vm.box = "ubuntu/bionic64"
     # A bit more RAM
     vb.memory = "8192"
 
