@@ -92,6 +92,8 @@ EOL
 # - libdb_cxx
 # - libevent
 # - pkg-config
+# - qt dependencies
+# - zmq dependency
 apt-get -y install dh-autoreconf libboost-all-dev libevent-dev libssl-dev pkg-config python3-zmq
 
 # Get berkely db v4.8
@@ -104,6 +106,8 @@ apt-get -y install software-properties-common
 add-apt-repository -y ppa:bitcoin/bitcoin
 apt-get -y update
 apt-get -y install libdb4.8-dev libdb4.8++-dev
+apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
+apt-get -y install libzmq3-dev
 
 # add blockchain tools to path
 sudo -Hu $user cp -r /vagrant/tools /home/$user/
@@ -127,9 +131,7 @@ EOL
 # Get the python-bitcoinrpc library
 echo_log "Getting python-bitcoinrpc"
 apt-get -y install python-pip python-dev build-essential 
-pip install --upgrade pip
-pip install --upgrade virtualenv
-pip install python-bitcoinrpc
+pip3 install python-bitcoinrpc
 
 # Make bitcoin data directory
 declare -r bitcoin_data_dir="/home/$user/.bitcoin"
