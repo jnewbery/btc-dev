@@ -126,6 +126,7 @@ alias bcli='bitcoin-cli'
 alias bb='BTC_build' #builds bitcoin
 alias bs="(pgrep bitcoind > /dev/null && bcli stop) || bd" # stop/start bitcoind
 alias bst='BTC_status'
+alias tl='combine_logs.py -c | less -R'
 EOL
 
 # Get the python-bitcoinrpc library
