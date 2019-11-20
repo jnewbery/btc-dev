@@ -4,6 +4,7 @@ set -o posix
 set -o pipefail
 
 declare -r guest_log="/vagrant/guest_logs/vagrant_mmc_bootstrap.log"
+declare -r bitcoin_data_dir="/home/vagrant/.bitcoin"
 
 echo "$0 will append logs to $guest_log"
 echo "Bootstrap starts at "`date`
@@ -21,22 +22,6 @@ echo_log "start"
 echo_log "uname: $(uname -a)"
 echo_log "current procs: $(ps -aux)"
 echo_log "current df: $(df -h /)"
-
-# Get user argument
-# Reset in case getopts has been used previously in the shell.
-OPTIND=1 
-
-# Initialize our own variables:
-user=""
-
-while getopts "u:" opt; do
-    case "$opt" in
-    u)  user=$OPTARG
-        ;;
-    esac
-done
-
-echo_log "user=$user, leftover variables: $@"
 
 # add 4G swap
 echo_log "create swap"
@@ -75,7 +60,7 @@ hash -r pip3
 pip3 install ipython
 
 # Remind user to update dotfiles
-cat >>/home/$user/.bashrc <<EOL
+cat >>/home/vagrant/.bashrc <<EOL
 
 echo "Don't forget to update your dotfiles!"
 EOL
@@ -110,15 +95,15 @@ apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev
 apt-get -y install libzmq3-dev
 
 # add blockchain tools to path
-sudo -Hu $user cp -r /vagrant/tools /home/$user/
-cat >>/home/$user/.bashrc <<EOL
+sudo -Hu vagrant cp -r /vagrant/tools /home/vagrant/
+cat >>/home/vagrant/.bashrc <<EOL
 
 # add blockchain tools to path
-PATH=\$PATH:/home/$user/tools
+PATH=\$PATH:/home/vagrant/tools
 EOL
 
 # helpful alises
-cat >>/home/$user/.bashrc <<'EOL'
+cat >>/home/vagrant/.bashrc <<'EOL'
 
 # Handy bitcoin aliases
 alias bd='bitcoind' #starts bitcoin
@@ -135,14 +120,13 @@ apt-get -y install python-pip python-dev build-essential
 pip3 install python-bitcoinrpc
 
 # Make bitcoin data directory
-declare -r bitcoin_data_dir="/home/$user/.bitcoin"
 mkdir "$bitcoin_data_dir"
-chown -R $user:$user "$bitcoin_data_dir"
-sudo -Hu $user cp /vagrant/conf/bitcoin.conf "$bitcoin_data_dir"
+chown -R vagrant:vagrant "$bitcoin_data_dir"
+sudo -Hu vagrant cp /vagrant/conf/bitcoin.conf "$bitcoin_data_dir"
 
 # Get Bitcoin
 echo_log "Getting bitcoin"
-sudo -Hu $user /home/$user/tools/BTC_resync
+sudo -Hu vagrant /home/vagrant/tools/BTC_resync
 
 echo_log "complete"
 echo "Bootstrap ends at "`date`
