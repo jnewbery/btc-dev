@@ -3,6 +3,7 @@
 guest_logs/
 guest_staging/
 Vagrantfile-private-aws
+*log
 
 # misc
 .DS_Store
