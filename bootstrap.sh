@@ -80,17 +80,8 @@ EOL
 # - qt dependencies
 # - zmq dependency
 apt-get -y install dh-autoreconf libboost-all-dev libevent-dev libssl-dev pkg-config python3-zmq
-
-# Get berkely db v4.8
 apt-get -y install software-properties-common
-add-apt-repository -y ppa:bitcoin/bitcoin
-apt-get -y update
-apt-get -y install libdb4.8-dev libdb4.8++-dev
-
-apt-get -y install software-properties-common
-add-apt-repository -y ppa:bitcoin/bitcoin
-apt-get -y update
-apt-get -y install libdb4.8-dev libdb4.8++-dev
+apt-get -y install libdb-dev libdb++-dev
 apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
 apt-get -y install libzmq3-dev
 
