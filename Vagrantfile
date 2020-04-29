@@ -3,6 +3,10 @@
 
 Vagrant.configure(2) do |config|
 
+  ################
+  # General config
+  ################
+
   config.vm.box = "ubuntu/bionic64"
 
   config.vm.provider "virtualbox" do |vb|
@@ -14,7 +18,9 @@ Vagrant.configure(2) do |config|
     config.vm.synced_folder "../bitcoin", "/bitcoin"
   end
 
+  ################
   # Network config
+  ################
 
   # No port forwarding
   # config.vm.network "forwarded_port", guest: 80, host: 8080
@@ -25,7 +31,10 @@ Vagrant.configure(2) do |config|
   # Public bridged network
   config.vm.network "public_network"
 
-  # provisioning script
+  #####################
+  # Provisioning script
+  #####################
+
   config.vm.provision :shell, path: "bootstrap.sh", args: "-u vagrant"
 
 end
