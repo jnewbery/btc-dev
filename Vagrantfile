@@ -7,7 +7,7 @@ Vagrant.configure(2) do |config|
   # General config
   ################
 
-  config.vm.box = "ubuntu/bionic64"
+  config.vm.box = "ubuntu/focal64"
 
   config.vm.provider "virtualbox" do |vb|
     # A bit more RAM
