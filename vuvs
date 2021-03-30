@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-vagrant up && vagrant ssh
+env -u GEM_HOME -u GEM_PATH vagrant up
+env -u GEM_HOME -u GEM_PATH vagrant ssh
