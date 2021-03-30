@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provider "virtualbox" do |vb|
     # A bit more RAM
-    vb.memory = 8192
+    vb.memory = 32768
     vb.cpus = 4
 
     # Shared storage for bitcoin source code
