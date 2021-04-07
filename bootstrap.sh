@@ -33,7 +33,7 @@ echo '/swapfile   none    swap    sw    0   0' >> /etc/fstab
 
 # baseline system prep
 echo_log "base system update"
-add-apt-repository -y ppa:pi-rho/dev
+# add-apt-repository -y ppa:pi-rho/dev
 apt-get -y update
 
 # Get stuff:
@@ -41,22 +41,16 @@ apt-get -y update
 # - ack
 # - ccache
 # - gdp
-# - git
 # - pip
-# - python 3.5
-# - tmux 2.4
-# - vim
 
-apt-get -y install ack-grep ccache gdb git python3.7 python3-pip tmux-next vim xdg-utils
-apt-get -f remove -y tmux
-rm -f /usr/bin/tmux
-ln -s /usr/bin/tmux-next /usr/bin/tmux
+apt-get -y install ack-grep ccache gdb python3-pip xdg-utils
 
 # Get Python stuff:
 #
 # - ipython
+apt-get -y install python-is-python3
 pip3 install --upgrade pip
-hash -r pip3
+# hash -r pip3
 pip3 install ipython
 
 # Remind user to update dotfiles
@@ -65,21 +59,20 @@ cat >>/home/vagrant/.bashrc <<EOL
 echo "Don't forget to update your dotfiles!"
 EOL
 
-# BITCOIN specific
+# Bitcoin specific
 ##################
 
 # Get stuff:
 #
 # - autoreconf
 # - Boostlib
-# - Open SSL dev libraries
 # - Python 3 zmq for running the python test suite
 # - libdb_cxx
 # - libevent
 # - pkg-config
 # - qt dependencies
 # - zmq dependency
-apt-get -y install dh-autoreconf libboost-all-dev libevent-dev libssl-dev pkg-config python3-zmq
+apt-get -y install dh-autoreconf libboost-all-dev libevent-dev pkg-config python3-zmq
 apt-get -y install software-properties-common
 apt-get -y install libdb-dev libdb++-dev
 apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
@@ -107,7 +100,7 @@ EOL
 
 # Get the python-bitcoinrpc library
 echo_log "Getting python-bitcoinrpc"
-apt-get -y install python-pip python-dev build-essential 
+apt-get -y install python-dev
 pip3 install python-bitcoinrpc
 
 # Make bitcoin data directory
@@ -124,4 +117,3 @@ echo "Bootstrap ends at "`date`
 bootstrap_end=`date +%s`
 echo "Bootstrap execution time is "$((bootstrap_end-bootstrap_start))" seconds"
 echo "$0 all done!"
-
