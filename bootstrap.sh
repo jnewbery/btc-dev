@@ -66,13 +66,15 @@ EOL
 #
 # - autoreconf
 # - Boostlib
-# - Python 3 zmq for running the python test suite
+# - Clang
 # - libdb_cxx
 # - libevent
 # - pkg-config
+# - Python 3 zmq for running the python test suite
 # - qt dependencies
 # - zmq dependency
 apt-get -y install dh-autoreconf libboost-all-dev libevent-dev pkg-config python3-zmq
+apt-get -y install clang
 apt-get -y install software-properties-common
 apt-get -y install libdb-dev libdb++-dev
 apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
