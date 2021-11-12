@@ -31,54 +31,39 @@ mkswap /swapfile
 swapon /swapfile
 echo '/swapfile   none    swap    sw    0   0' >> /etc/fstab
 
-# baseline system prep
-echo_log "base system update"
-# add-apt-repository -y ppa:pi-rho/dev
-apt-get -y update
-
-# Get stuff:
-#
-# - ack
-# - ccache
-# - gdp
-# - pip
-
-apt-get -y install ack-grep ccache gdb python3-pip xdg-utils
-
-# Get Python stuff:
-#
-# - ipython
-apt-get -y install python-is-python3
-pip3 install --upgrade pip
-# hash -r pip3
-pip3 install ipython
-
 # Remind user to update dotfiles
 cat >>/home/vagrant/.bashrc <<EOL
 
 echo "Don't forget to update your dotfiles!"
 EOL
 
-# Bitcoin specific
-##################
-
 # Get stuff:
-#
-# - autoreconf
-# - Boostlib
-# - Clang
-# - libdb_cxx
-# - libevent
-# - pkg-config
-# - Python 3 zmq for running the python test suite
-# - qt dependencies
-# - zmq dependency
-apt-get -y install dh-autoreconf libboost-all-dev libevent-dev pkg-config python3-zmq
-apt-get -y install clang
-apt-get -y install software-properties-common
-apt-get -y install libdb-dev libdb++-dev
-apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
-apt-get -y install libzmq3-dev
+echo_log "base system update"
+apt-get -y update
+
+apt-get -y install ack-grep  # ack
+apt-get -y install ccache  # ccache
+apt-get -y install clang  # clang
+apt-get -y install dh-autoreconf  # autoreconf
+apt-get -y install gdb  # gnu debugger
+apt-get -y install libboost-all-dev  # boost
+apt-get -y install libdb-dev libdb++-dev  # bdb
+apt-get -y install libevent-dev  # libevent
+apt-get -y install libprotobuf-dev protobuf-compiler  # protobuf
+apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools  # qt
+apt-get -y install libsqlite3-dev  # sqlite
+apt-get -y install pkg-config  # pkg-config
+apt-get -y install python-dev  # python-bitcoinrpc
+apt-get -y install python-is-python3  # ipython
+apt-get -y install python3-pip  # pip3
+apt-get -y install python3-zmq libzmq3-dev  # zmq
+apt-get -y install software-properties-common  # software properties ??
+apt-get -y install xdg-utils  # xdg-utils
+
+# Get python stuff
+pip3 install --upgrade pip
+pip3 install ipython  # ipython
+pip3 install python-bitcoinrpc  # python-bitcoinrpc
 
 # add blockchain tools to path
 sudo -Hu vagrant cp -r /vagrant/tools /home/vagrant/
@@ -99,11 +84,6 @@ alias bs="(pgrep bitcoind > /dev/null && bcli stop) || bd" # stop/start bitcoind
 alias bst='BTC_status'
 alias tl='combine_logs.py -c | less -R'
 EOL
-
-# Get the python-bitcoinrpc library
-echo_log "Getting python-bitcoinrpc"
-apt-get -y install python-dev
-pip3 install python-bitcoinrpc
 
 # Make bitcoin data directory
 mkdir "$bitcoin_data_dir"
