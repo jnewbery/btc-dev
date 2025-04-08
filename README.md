@@ -1,6 +1,6 @@
 # btc-dev
 
-Virtual machine configuration for development environment for [bitcoin](https://github.com/bitcoin/bitcoin).
+Virtual machine configuration for development environment for [Bitcoin Core](https://github.com/bitcoin/bitcoin).
 
 ### What it's doing
 
